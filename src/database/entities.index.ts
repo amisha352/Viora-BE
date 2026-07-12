@@ -1,0 +1,13 @@
+export { User } from '../modules/users/entities/user.entity';
+export { Role } from '../modules/auth/entities/role.entity';
+export { Permission } from '../modules/auth/entities/permission.entity';
+export { RefreshToken } from '../modules/auth/entities/refresh-token.entity';
+export { AuditLog } from '../modules/auth/entities/audit-log.entity';
+export { Subject } from '../modules/subjects/entities/subject.entity';
+export { Concept } from '../modules/concepts/entities/concept.entity';
+export { LearningExperience } from '../modules/experiences/entities/learning-experience.entity';
+export { Activity } from '../modules/activities/entities/activity.entity';
+export { Assessment } from '../modules/assessments/entities/assessment.entity';
+export { Question } from '../modules/assessments/entities/question.entity';
+export { Progress } from '../modules/progress/entities/progress.entity';
+export { Asset } from '../modules/assets/entities/asset.entity';
