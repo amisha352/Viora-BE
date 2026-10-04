@@ -4,12 +4,14 @@ import {
   Index,
   ManyToOne,
   OneToMany,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { Concept } from '../../concepts/entities/concept.entity';
 import { Activity } from '../../activities/entities/activity.entity';
 import { LearningExperienceType } from '../enums/learning-experience-type.enum';
+import { LearningExperienceContent } from './learning-experience-content.entity';
 
 @Entity('learning_experiences')
 @Index(['conceptId'])
@@ -30,7 +32,7 @@ export class LearningExperience extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string | null;
 
-  @Column({ type: 'enum', enum: LearningExperienceType })
+  @Column({ type: 'enum', enum: LearningExperienceType,nullable: true })
   type: LearningExperienceType;
 
   @Column({ type: 'varchar', length: 100, name: 'renderer_key' })
@@ -56,4 +58,9 @@ export class LearningExperience extends BaseEntity {
 
   @OneToMany(() => Activity, (activity) => activity.learningExperience)
   activities: Activity[];
+
+  @OneToOne(() => LearningExperienceContent, (content) => content.learningExperience, {
+    cascade: true,
+  })
+  content: LearningExperienceContent;
 }

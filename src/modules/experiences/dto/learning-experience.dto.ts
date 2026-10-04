@@ -53,6 +53,11 @@ export class CreateLearningExperienceDto {
   @IsInt()
   @Min(0)
   order?: number;
+
+  @ApiPropertyOptional({ description: 'Raw HTML for interactive experiences' })
+  @IsOptional()
+  @IsString()
+  htmlContent?: string;
 }
 
 export class UpdateLearningExperienceDto extends PartialType(CreateLearningExperienceDto) {
@@ -91,6 +96,20 @@ export class LearningExperienceResponseDto {
 
   @ApiProperty({ enum: EntityStatus })
   status: EntityStatus;
+
+  @ApiProperty()
+  hasHtml: boolean;
+}
+
+export class LearningExperienceHtmlContentDto {
+  @ApiProperty()
+  learningExperienceId: string;
+
+  @ApiProperty({ nullable: true })
+  htmlContent: string | null;
+
+  @ApiProperty()
+  version: number;
 }
 
 export class LearningExperienceQueryDto extends PaginationQueryDto {

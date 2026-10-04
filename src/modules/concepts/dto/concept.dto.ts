@@ -6,6 +6,7 @@ import {
   IsUUID,
   IsObject,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { EntityStatus } from '../../../common/enums/entity-status.enum';
 import { PaginationQueryDto } from '../../../common/dto/pagination-query.dto';
@@ -101,10 +102,11 @@ export class ConceptQueryDto extends PaginationQueryDto {
 }
 
 export class MoveConceptDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true, description: 'New parent ID, or null to move to root' })
   @IsOptional()
+  @ValidateIf((_, value) => value !== null)
   @IsUUID()
-  newParentId?: string;
+  newParentId?: string | null;
 
   @ApiPropertyOptional()
   @IsOptional()

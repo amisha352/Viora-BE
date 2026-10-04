@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class PaginationMetaDto {
   @ApiProperty()
@@ -10,12 +10,12 @@ export class PaginationMetaDto {
   @ApiProperty()
   total: number;
 
-  @ApiProperty()
-  totalPages: number;
+  @ApiPropertyOptional()
+  totalPages?: number;
 
-  @ApiProperty()
-  hasNextPage: boolean;
+  @ApiPropertyOptional()
+  hasNextPage?: boolean;
 
-  @ApiProperty()
-  hasPreviousPage: boolean;
+  @ApiPropertyOptional()
+  hasPreviousPage?: boolean;
 }

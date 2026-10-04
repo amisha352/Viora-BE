@@ -1,5 +1,5 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, Get, Post, Patch, Delete, Param, Body, Query } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { ConceptsService } from '../services/concepts.service';
 import {
   CreateConceptDto,
@@ -16,35 +16,57 @@ import { ApiResponseDto, PaginatedResponseDto } from '../../../common/dto/api-re
 export class ConceptsController {
   constructor(private readonly conceptsService: ConceptsService) {}
 
-  findAll(_query: ConceptQueryDto): Promise<PaginatedResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.findAll(_query);
+  @Get()
+  @ApiOperation({ summary: 'List concepts with pagination' })
+  findAll(@Query() query: ConceptQueryDto): Promise<PaginatedResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.findAll(query);
   }
 
-  findTree(_subjectId: string): Promise<ApiResponseDto<ConceptResponseDto[]>> {
-    return this.conceptsService.findTree(_subjectId);
+  @Get('tree/:subjectId')
+  @ApiOperation({ summary: 'Get concept tree for a subject' })
+  findTree(@Param('subjectId') subjectId: string): Promise<ApiResponseDto<ConceptResponseDto[]>> {
+    return this.conceptsService.findTree(subjectId);
   }
 
-  findOne(_id: string): Promise<ApiResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.findOne(_id);
+  @Get(':id')
+  @ApiOperation({ summary: 'Get concept by ID' })
+  findOne(@Param('id') id: string): Promise<ApiResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.findOne(id);
   }
 
-  create(_dto: CreateConceptDto): Promise<ApiResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.create(_dto);
+  @Post()
+  @ApiOperation({ summary: 'Create concept' })
+  create(@Body() dto: CreateConceptDto): Promise<ApiResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.create(dto);
   }
 
-  update(_id: string, _dto: UpdateConceptDto): Promise<ApiResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.update(_id, _dto);
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update concept' })
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateConceptDto,
+  ): Promise<ApiResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.update(id, dto);
   }
 
-  move(_id: string, _dto: MoveConceptDto): Promise<ApiResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.move(_id, _dto);
+  @Post(':id/move')
+  @ApiOperation({ summary: 'Move concept in the tree' })
+  move(
+    @Param('id') id: string,
+    @Body() dto: MoveConceptDto,
+  ): Promise<ApiResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.move(id, dto);
   }
 
-  publish(_id: string): Promise<ApiResponseDto<ConceptResponseDto>> {
-    return this.conceptsService.publish(_id);
+  @Post(':id/publish')
+  @ApiOperation({ summary: 'Publish concept' })
+  publish(@Param('id') id: string): Promise<ApiResponseDto<ConceptResponseDto>> {
+    return this.conceptsService.publish(id);
   }
 
-  remove(_id: string): Promise<ApiResponseDto<null>> {
-    return this.conceptsService.remove(_id);
+  @Delete(':id')
+  @ApiOperation({ summary: 'Soft delete concept' })
+  remove(@Param('id') id: string): Promise<ApiResponseDto<null>> {
+    return this.conceptsService.remove(id);
   }
 }

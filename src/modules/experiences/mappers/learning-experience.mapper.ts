@@ -2,7 +2,10 @@ import { LearningExperience } from '../entities/learning-experience.entity';
 import { LearningExperienceResponseDto } from '../dto/learning-experience.dto';
 
 export class LearningExperienceMapper {
-  static toResponse(entity: LearningExperience): LearningExperienceResponseDto {
+  static toResponse(
+    entity: LearningExperience,
+    hasHtml = false,
+  ): LearningExperienceResponseDto {
     return {
       id: entity.id,
       conceptId: entity.conceptId,
@@ -14,10 +17,16 @@ export class LearningExperienceMapper {
       contentVersion: entity.contentVersion,
       order: entity.order,
       status: entity.status,
+      hasHtml,
     };
   }
 
-  static toResponseList(entities: LearningExperience[]): LearningExperienceResponseDto[] {
-    return entities.map(LearningExperienceMapper.toResponse);
+  static toResponseList(
+    entities: LearningExperience[],
+    hasHtmlMap?: Map<string, boolean>,
+  ): LearningExperienceResponseDto[] {
+    return entities.map((entity) =>
+      LearningExperienceMapper.toResponse(entity, hasHtmlMap?.get(entity.id) ?? false),
+    );
   }
 }

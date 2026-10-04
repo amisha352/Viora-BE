@@ -6,6 +6,7 @@ export { AuditLog } from '../modules/auth/entities/audit-log.entity';
 export { Subject } from '../modules/subjects/entities/subject.entity';
 export { Concept } from '../modules/concepts/entities/concept.entity';
 export { LearningExperience } from '../modules/experiences/entities/learning-experience.entity';
+export { LearningExperienceContent } from '../modules/experiences/entities/learning-experience-content.entity';
 export { Activity } from '../modules/activities/entities/activity.entity';
 export { Assessment } from '../modules/assessments/entities/assessment.entity';
 export { Question } from '../modules/assessments/entities/question.entity';
